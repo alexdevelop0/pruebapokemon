@@ -5,6 +5,7 @@ postsReducerHome(PostsStateHome? prevState, SetPostsStateActionHome action) {
   final payload = action.postsState;
   return prevState?.copyWith(
     pokemonListModel: payload.pokemonListModel,
+    pokemonDetailsModel: payload.pokemonDetailsModel,
 
     // posts: payload.posts,
   );

@@ -17,15 +17,10 @@ class AppWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Container(
-                        height: 70,
-                        child: Image.asset("assets/images/gif/loading.gif"),
-                        margin: EdgeInsets.only(right: 20),
-                      ),
                       Text(
                         "Cargando",
                         textAlign: TextAlign.center,
-                        //  style: AppStyle().styleText(18, AppColors.mainColor, true),
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),

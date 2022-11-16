@@ -17,8 +17,28 @@ class API {
 
   static const String INITIAL_URL = "/pokemon";
 
+  static const String DETAILS_POKEMON_URL = "/pokemon/";
+
   Future<MyHttpResponse> getListPokemon() async {
     var url = Uri.parse(URL + INITIAL_URL);
+    print(url.toString());
+    MyHttpResponse response = await getRequest(url);
+    try {
+      if (response.statusCode == 200) {
+        response.message = "exito";
+      } else {
+        response.message = "Error";
+        response.data = null;
+      }
+    } catch (e) {
+      response.message = e.toString();
+      response.data = null;
+    }
+    return response;
+  }
+
+  Future<MyHttpResponse> getDetailsPokemon({String? id}) async {
+    var url = Uri.parse(/*URL + DETAILS_POKEMON_URL + id.toString() + "/"*/ id.toString());
     print(url.toString());
     MyHttpResponse response = await getRequest(url);
     try {

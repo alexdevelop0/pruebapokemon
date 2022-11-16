@@ -13,6 +13,11 @@ class getListPokemonAction extends ErrorAction {
   getListPokemonAction(BuildContext context) : super(context);
 }
 
+class getDetailsPokemonAction extends ErrorAction {
+  getDetailsPokemonAction(BuildContext context, this.id) : super(context);
+  String id;
+}
+
 @immutable
 class SetPostsStateActionHome {
   final PostsStateHome postsState;

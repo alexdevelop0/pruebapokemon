@@ -1,4 +1,3 @@
-import 'package:meta/meta.dart';
 import 'package:pokemon/redux/settingApp/settingsHomeActions.dart';
 import 'package:pokemon/redux/settingApp/settingsHomeReducer.dart';
 import 'package:pokemon/redux/settingApp/settingsHomeState.dart';
@@ -15,12 +14,11 @@ AppStateHome appReducerHome(AppStateHome state, dynamic action) {
   return state;
 }
 
-@immutable
 class AppStateHome {
-  final PostsStateHome? postsState;
+  final PostsStateHome postsState;
 
   AppStateHome({
-    this.postsState,
+    required this.postsState,
   });
 
   AppStateHome copyWith({
@@ -33,9 +31,9 @@ class AppStateHome {
 }
 
 class ReduxHome {
-  static Store<AppStateHome>? _store;
+  static Store<AppStateHome> _store = _store;
 
-  static Store<AppStateHome>? get store {
+  static Store<AppStateHome> get store {
     if (_store == null) {
       throw Exception("store is not initialized");
     } else {

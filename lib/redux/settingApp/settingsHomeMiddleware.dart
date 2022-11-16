@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:pokemon/app/app_settings.dart';
 import 'package:pokemon/data/api/api.dart';
+import 'package:pokemon/models/PokemoDetailsModel.dart';
 import 'package:pokemon/models/PokemonListModel.dart';
 import 'package:pokemon/redux/app/app_state.dart';
 import 'package:pokemon/redux/settingApp/settingsHomeState.dart';
@@ -61,10 +62,35 @@ class settingHomeMiddleware extends MiddlewareClass<AppState> {
         if (action is getListPokemonAction) {
           return _getListPokemon(next, action, store);
         }
+        if (action is getDetailsPokemonAction) {
+          return _getDetailsPokemon(next, action, store);
+        }
       } else {
         AlertWidget().message(action.context, "No hay conexión");
       }
     });
+  }
+}
+
+Future<void> _getDetailsPokemon(NextDispatcher next, getDetailsPokemonAction action, Store<AppState> store) async {
+  AppWidget().showProgressGlobal(action.context);
+
+  var response = await API().getDetailsPokemon(id: action.id);
+  Navigator.pop(action.context);
+  switch (response.statusCode) {
+    case AppSettings.statusCodeSuccess:
+      PokemonDetailsModel data = pokemonDetailsModelFromJson(response.data);
+      ReduxHome.store!.dispatch(
+        SetPostsStateActionHome(PostsStateHome(pokemonDetailsModel: data)),
+      );
+
+      break;
+    case AppSettings.statusCodeError:
+      AlertWidget().message(action.context, response.message);
+
+      break;
+    default:
+      AlertWidget().message(action.context, response.message);
   }
 }
 

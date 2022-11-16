@@ -4,6 +4,7 @@ import 'package:pokemon/data/api/api.dart';
 import 'package:pokemon/models/PokemonListModel.dart';
 import 'package:pokemon/redux/settingApp/settingsHomeActions.dart';
 import 'package:pokemon/redux/settingApp/store.dart';
+import 'package:pokemon/screen/pokemonDetails.dart';
 import 'package:redux/redux.dart';
 
 import '../../redux/app/app_state.dart';
@@ -62,8 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     var _store;
-    return
-        /*StoreProvider<AppStateHome>(
+
+    return StoreProvider<AppStateHome>(
         //ReduxSignUp.store,
         store: ReduxHome.store,
         child: StoreConnector<AppStateHome, dynamic>(
@@ -72,41 +73,51 @@ class _MyHomePageState extends State<MyHomePage> {
             onInit: (store) {
               _store = store;
             },
-            builder: (context, value) {*/
-        Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView(
-          children: <Widget>[
-            ReduxHome.store!.state.postsState!.pokemonListModel == null
-                ? Text("No hay resultados")
-                : ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: ReduxHome.store!.state.postsState!.pokemonListModel!.results!.length,
-                    itemBuilder: ((context, index) {
-                      Result data = ReduxHome.store!.state.postsState!.pokemonListModel!.results![index];
-                      return Container(
-                          margin: EdgeInsets.only(top: 20),
-                          child: ListTile(
-                            title: Text(data.name.toString()),
-                            leading: CircleAvatar(
-                              radius: 30.0,
-                              backgroundImage: NetworkImage('https://via.placeholder.com/150'),
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ));
-                    }))
-          ],
-        ),
-      ),
-    );
+            builder: (context, value) {
+              return Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  // Here we take the value from the MyHomePage object that was created by
+                  // the App.build method, and use it to set our appbar title.
+                  title: Text(widget.title),
+                ),
+                body: Center(
+                  // Center is a layout widget. It takes a single child and positions it
+                  // in the middle of the parent.
+                  child: ListView(
+                    children: <Widget>[
+                      ReduxHome.store!.state.postsState!.pokemonListModel == null
+                          ? Text("No hay resultados")
+                          : ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: ReduxHome.store!.state.postsState!.pokemonListModel!.results!.length,
+                              itemBuilder: ((context, index) {
+                                Result data = ReduxHome.store!.state.postsState!.pokemonListModel!.results![index];
+                                return Container(
+                                    margin: EdgeInsets.only(top: 20),
+                                    child: ListTile(
+                                      title: Text(data.name.toString()),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => PokemonDetailsPage(
+                                                    url: data.url.toString(),
+                                                  )),
+                                        );
+                                      },
+                                      leading: CircleAvatar(
+                                        radius: 30.0,
+                                        backgroundImage: NetworkImage('https://via.placeholder.com/150'),
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                    ));
+                              }))
+                    ],
+                  ),
+                ),
+              );
+            }));
   }
 
   @override
