@@ -76,6 +76,7 @@ Future<void> _getDetailsPokemon(NextDispatcher next, getDetailsPokemonAction act
   AppWidget().showProgressGlobal(action.context);
 
   var response = await API().getDetailsPokemon(id: action.id);
+  print("details: " + response.data.toString());
   Navigator.pop(action.context);
   switch (response.statusCode) {
     case AppSettings.statusCodeSuccess:

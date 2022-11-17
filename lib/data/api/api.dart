@@ -39,7 +39,7 @@ class API {
 
   Future<MyHttpResponse> getDetailsPokemon({String? id}) async {
     var url = Uri.parse(/*URL + DETAILS_POKEMON_URL + id.toString() + "/"*/ id.toString());
-    print(url.toString());
+    print("url: " + url.toString());
     MyHttpResponse response = await getRequest(url);
     try {
       if (response.statusCode == 200) {
@@ -59,7 +59,7 @@ class API {
 Future<MyHttpResponse> getRequest(Uri uri) async {
   var response = await http.get(uri);
 
-  var data = json.decode(utf8.decode(response.bodyBytes));
+  var data = json.decode(response.body);
 
   return MyHttpResponse(response.statusCode, response.body);
 }

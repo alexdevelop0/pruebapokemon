@@ -4,7 +4,7 @@
 
 import 'dart:convert';
 
-PokemonDetailsModel pokemonDetailsModelFromJson(var str) => PokemonDetailsModel.fromJson(str);
+PokemonDetailsModel pokemonDetailsModelFromJson(String str) => PokemonDetailsModel.fromJson(json.decode(str));
 
 String pokemonDetailsModelToJson(PokemonDetailsModel data) => json.encode(data.toJson());
 
